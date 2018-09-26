@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="jumbotron">
+		<h2>Administration</h2><hr>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li class="active"><a href="#general" data-toggle="tab">General</a></li>
+				<li><a href="#accounts" data-toggle="tab">Accounts</a></li>
+			</ul>
+
+			<div class="tab-content clearfix">
+				<% include tabs/general %>
+				<% include tabs/accounts %>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/js/admin.js"></script>

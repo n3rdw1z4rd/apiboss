@@ -1,0 +1,73 @@
+<style>
+	.ace-editor {
+		width: 100%;
+		height: 400px;
+		white-space: nowrap;
+	}
+</style>
+
+<div class="container">
+	<div class="jumbotron">
+		<h2>
+			<span data-toggle="tooltip" title="Click to rename">
+				<a data-keyboard="true" data-toggle="modal" data-target="#rename-method-modal" href="#"><%= method.name %></a>
+			</span>
+		</h2><hr>
+		<form method="post" action="/api/updateMethod" id="liveTestForm">
+			<input name="apiId" type="hidden" value="<%= method.ApiId %>"/>
+			<input name="methodId" type="hidden" value="<%= method.id %>"/>
+			<p>Reponse Type:<br>
+				<select class="form-control" name="responseType" id="responseType">
+					<% constants.METHOD_RESPONSE_TYPE.getKeys().forEach(key => { %>
+						<option value="<%= constants.METHOD_RESPONSE_TYPE[key] %>"<%- method.responseType == constants.METHOD_RESPONSE_TYPE[key] ? 'selected' : '' %>><%= key %></option>
+					<% }) %>
+				</select>
+			</p>
+			<% if (method.responseType == constants.METHOD_RESPONSE_TYPE.SCRIPT) { %>
+				<p>Scripting Information:<br>
+				</p><br>
+			<% }%>
+			<p>Response Data/Logic:<br>
+				<textarea class="form-control" name="response" id="response"><%- method.response %></textarea>
+			</p>
+			<p>POST Data (JSON):</p>
+			<p>
+				<textarea class="form-control" name="postData" id="postData"><%- method.postData %></textarea>
+			</p>
+			<p><button class="form-control btn btn-info" type="submit">Update Method</button></p>
+			<p><button class="form-control btn btn-primary" id="runLiveTest" data-testurl="<%= testUrl %>" data-keyboard="true" data-toggle="modal" data-target="#test-response-modal">Test <%= method.name %></button></p>
+		</form>
+	</div>
+</div>
+<% include rename_method_modal %>
+<% include test_response_modal %>
+
+<script src="/ace/src-min/ace.js"></script>
+<script>
+	function CreateAceEditorForTextArea(textAreaId) {
+		var textArea = $(`textarea[id="${textAreaId}"]`)
+		textArea.hide()
+
+		var aceEditorContainer = $('<pre>')
+		aceEditorContainer.addClass('ace-editor')
+		aceEditorContainer.attr('id', `ace-${textAreaId}`)
+
+		textArea.after(aceEditorContainer)
+
+		var aceEditor = ace.edit(`ace-${textAreaId}`)
+		aceEditor.setTheme("ace/theme/chrome")
+		aceEditor.getSession().setMode("ace/mode/javascript")
+		aceEditor.getSession().setValue(textArea.val())
+		aceEditor.getSession().on('change', function() {
+			textArea.val(aceEditor.getSession().getValue())
+		})
+	}
+
+	$(function() {
+		CreateAceEditorForTextArea("response")
+		CreateAceEditorForTextArea("postData")
+	})
+</script>
+
+
+<script src="/js/live_test.js"></script>

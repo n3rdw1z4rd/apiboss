@@ -1,0 +1,34 @@
+<div class="container">
+	<div class="jumbotron">
+		<h2>
+			<span data-toggle="tooltip" title="Click to edit">
+				<a data-keyboard="true" data-toggle="modal" data-target="#edit-account-email-modal" href="#"><%= editAccount.email %></a>
+			</span>
+		</h2><hr>
+		<form id="detailsForm" method="POST" action="/admin/updateAccount">
+			<p><input name="id" type="hidden" value="<%= editAccount.id %>"/></p>
+			<p>
+				<select class="form-control" name="role">
+					<% constants.ACCOUNT_ROLE.getKeys().forEach(key => { %>
+						<option value="<%= constants.ACCOUNT_ROLE[key] %>"<%- editAccount.role == constants.ACCOUNT_ROLE[key] ? 'selected' : '' %>><%= key %></option>
+					<% }) %>
+				</select>
+			</p>
+			<p><input class="form-control" name="apiRoute" type="text" placeholder="API Route" value="<%= editAccount.apiRoute %>"/></p>
+			<p><input class="form-control" name="firstName" type="text" placeholder="First Name" value="<%= editAccount.firstName %>"/></p>
+			<p><input class="form-control" name="lastName" type="text" placeholder="Last Name" value="<%= editAccount.lastName %>"/></p>
+			<p><input class="form-control" name="primaryPhoneNumber" type="text" placeholder="Primary Phone Number" value="<%= editAccount.primaryPhoneNumber %>"/></p>
+			<p><input class="form-control" name="secondaryPhoneNumber" type="text" placeholder="Secondary Phone Number" value="<%= editAccount.secondaryPhoneNumber %>"/></p>
+			<p><input class="form-control" name="address1" type="text" placeholder="Address 1" value="<%= editAccount.address1 %>"/></p>
+			<p><input class="form-control" name="address2" type="text" placeholder="Address 2" value="<%= editAccount.address2 %>"/></p>
+			<p><input class="form-control" name="city" type="text" placeholder="City" value="<%= editAccount.city %>"/></p>
+			<p><input class="form-control" name="state" type="text" placeholder="State" value="<%= editAccount.state %>"/></p>
+			<p><input class="form-control" name="postalCode" type="text" placeholder="Postal Code" value="<%= editAccount.postalCode %>"/></p>
+			<p><button class="form-control btn btn-primary" type="submit">Update</button></p>
+		</form>
+		<hr>
+		<!-- <a class="btn-xs btn-info" href="/account/resetPassword">Reset Password</a>
+		<a class="btn-xs btn-danger" href="/account/deleteAccount">Delete Account</a> -->
+	</div>
+</div>
+<% include edit-account-email-modal %>

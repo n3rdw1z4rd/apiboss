@@ -1,37 +1,33 @@
 {
-  "name": "apiboss",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "cross-env NODE_ENV=development nodemon",
-    "start": "cross-env NODE_ENV=production nodemon"
-  },
-  "author": "John Wakley <jwakley74@gmail.com>",
-  "license": "MIT",
-  "repository": {
-	"type": "git",
-	"url": "https://github.com/JohnCWakley/apiboss.git"
-  },
-  "dependencies": {
-    "ace-builds": "^1.2.5",
-    "body-parser": "^1.20.1",
-    "connect-flash": "^0.1.1",
-    "ejs": "^3.1.7",
-    "express": "^4.18.2",
-    "express-session": "^1.14.2",
-    "helmet": "^3.2.0",
-    "hogger": "^1.1.8",
-    "mysql": "^2.12.0",
-    "nodemailer": "^6.6.1",
-    "passport": "^0.6.0",
-    "passport-local": "^1.0.0",
-    "passport-local-sequelize": "^0.8.0",
-    "sandbox": "^0.8.6",
-    "sequelize": ">=6.1.0",
-    "sqlite3": "^4.0.2"
-  },
-  "devDependencies": {
-    "cross-env": "^4.0.0"
-  }
+    "name": "apiboss",
+    "version": "0.2.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "cross-env NODE_ENV=development nodemon",
+        "start": "cross-env NODE_ENV=production nodemon"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:n3rdw1z4rd/apiboss.git"
+    },
+    "dependencies_OLD": {
+        "ace-builds": "^1.2.5",
+        "body-parser": "^1.20.1",
+        "connect-flash": "^0.1.1",
+        "ejs": "^3.1.7",
+        "express": "^4.18.2",
+        "express-session": "^1.14.2",
+        "helmet": "^3.2.0",
+        "mysql": "^2.12.0",
+        "nodemailer": "^6.6.1",
+        "passport": "^0.6.0",
+        "passport-local": "^1.0.0",
+        "passport-local-sequelize": "^0.8.0",
+        "sandbox": "^0.8.6",
+        "sequelize": ">=6.1.0",
+        "sqlite3": "^4.0.2"
+    }
 }

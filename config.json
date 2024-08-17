@@ -1,9 +1,9 @@
 {
     "httpPort": 8080,
-    "useSecurityMeasures": true,
+    "useSecurityMeasures": false,
     "smtpConnectionUrl": "",
     "dbConnectionUrl": "sqlite://apiboss.db",
-    "dbForceSync": false,
+    "dbForceSync": true,
     "dbShowLogs": false,
     "resetTokenExpireTime": 3600000,
     "fieldNameDelimiter": "|",

@@ -49,7 +49,7 @@ module.exports = app => {
 										var response
 
 										switch (method.responseType) {
-											case app.const.METHOD_RESPONSE_TYPE.JSON:
+											case app.constants.METHOD_RESPONSE_TYPE.JSON:
 												res.setHeader('Content-Type', 'application/json')
 												try {
 													response = JSON.parse(method.response.trim())
@@ -61,7 +61,7 @@ module.exports = app => {
 													}
 												}
 												break
-											case app.const.METHOD_RESPONSE_TYPE.SCRIPT:
+											case app.constants.METHOD_RESPONSE_TYPE.SCRIPT:
 												app.services.Storage.models.ApiTable.findAll({
 													where: {
 														ApiId: api.id
@@ -180,7 +180,7 @@ module.exports = app => {
 										var response
 
 										switch (method.responseType) {
-											case app.const.METHOD_RESPONSE_TYPE.JSON:
+											case app.constants.METHOD_RESPONSE_TYPE.JSON:
 												res.setHeader('Content-Type', 'application/json')
 												try {
 													response = JSON.parse(method.response.trim())
@@ -192,7 +192,7 @@ module.exports = app => {
 													}
 												}
 												break
-											case app.const.METHOD_RESPONSE_TYPE.SCRIPT:
+											case app.constants.METHOD_RESPONSE_TYPE.SCRIPT:
 												app.services.Storage.models.ApiTable.findAll({
 													where: {
 														ApiId: api.id

@@ -40,8 +40,8 @@ module.exports = app => {
 
         res.locals = app.config.locals
         res.locals.account = req.user
-        res.locals.constants = app.const
-        res.locals.isAdmin = req.user ? (req.user.role >= app.const.ACCOUNT_ROLE.ADMIN) : false
+        res.locals.constants = app.constants
+        res.locals.isAdmin = req.user ? (req.user.role >= app.constants.ACCOUNT_ROLE.ADMIN) : false
         res.locals.error = req.flash('error')
         res.locals.warning = req.flash('warning')
         res.locals.success = req.flash('success')

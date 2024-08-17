@@ -19,7 +19,7 @@ module.exports = (app) => {
 
     router.get('/verifyStatus', (req, res) => {
         switch (req.user.status) {
-            case app.const.ACCOUNT_STATUS.INACTIVE:
+            case app.constants.ACCOUNT_STATUS.INACTIVE:
                 crypto.randomBytes(20, (error, buf) => {
                     if (error) throw error
 
@@ -48,7 +48,7 @@ module.exports = (app) => {
                     })
                 })
                 break
-            case app.const.ACCOUNT_STATUS.BANNED:
+            case app.constants.ACCOUNT_STATUS.BANNED:
                 req.logout()
                 req.flash('error', 'This account was BANNED. If you feel this should not be, feel free to contact support.')
                 res.redirect('/account/login')
@@ -202,7 +202,7 @@ module.exports = (app) => {
                 req.flash('error', 'Password reset token is invalid or has expired')
                 return res.redirect('/resetPassword')
             } else {
-				/*if (account.status !== app.const.ACCOUNT_STATUS.ACTIVE) {
+				/*if (account.status !== app.constants.ACCOUNT_STATUS.ACTIVE) {
 					req.flash('error', 'That account is not active')
 					res.redirect()
 				} else*/ if (req.body.password !== req.body.passwordConfirm) {
@@ -262,7 +262,7 @@ module.exports = (app) => {
                             req.flash('error', info.message)
                             return res.redirect('/account/deleteAccount')
                         } else {
-                            account.status = app.const.ACCOUNT_STATUS.INACTIVE
+                            account.status = app.constants.ACCOUNT_STATUS.INACTIVE
                             //account.destroy({ force: true }) // Shouldn't delete accounts, just make them inactive.
                             account.save().then(account => {
                                 req.logout()
@@ -294,7 +294,7 @@ module.exports = (app) => {
                 req.flash('error', 'Re-activate account token is invalid or has expired')
                 return res.redirect('/')
             } else {
-                if (account.status == app.const.ACCOUNT_STATUS.BANNED) {
+                if (account.status == app.constants.ACCOUNT_STATUS.BANNED) {
                     req.flash('error', 'That account has been BANNED, if you feel this should not be, please contact support.')
                     res.redirect('/')
                 } else {
@@ -316,11 +316,11 @@ module.exports = (app) => {
                 req.flash('error', 'Re-activate account token is invalid or has expired')
                 return res.redirect('/')
             } else {
-                if (account.status == app.const.ACCOUNT_STATUS.BANNED) {
+                if (account.status == app.constants.ACCOUNT_STATUS.BANNED) {
                     req.flash('error', 'That account has been BANNED, if you feel this should not be, please contact support.')
                     res.redirect('/')
                 } else {
-                    account.status = app.const.ACCOUNT_STATUS.ACTIVE
+                    account.status = app.constants.ACCOUNT_STATUS.ACTIVE
                     account.resetToken = null
                     account.save().then(account => {
                         req.logIn(account, error => {

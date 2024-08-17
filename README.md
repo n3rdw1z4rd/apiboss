@@ -1,4 +1,4 @@
-![apiboss-logo](https://github.com/user-attachments/assets/a92f09a6-8d41-445d-a17e-691ce3b5dfce)
+![ApiBoss](./static/images/apiboss-logo.png)
 
 A Web App for building out and testing mock REST APIs with logic and database functionality.
 

@@ -1,9 +1,9 @@
-const passport = require('passport')
-const passportLocalSequelize = require('passport-local-sequelize')
-const constants = require('../locals/constants')
+const passport = require('passport');
+const passportLocalSequelize = require('passport-local-sequelize');
+const constants = require('../locals/constants');
 
 module.exports = (db, TYPE) => {
-    var Account = db.define('Account', {
+    const Account = db.define('Account', {
         email: {
             type: TYPE.STRING,
             allowNull: false,
@@ -74,7 +74,7 @@ module.exports = (db, TYPE) => {
         }
     })
 
-    //Account.sync({ force: true })
+    Account.sync({ force: true });
 
     passportLocalSequelize.attachToUser(Account, {
         usernameField: 'email',

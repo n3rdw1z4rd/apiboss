@@ -3,6 +3,8 @@ const { createTransport } = require('nodemailer');
 const log = require('../locals/logger')('smtpService');
 
 module.exports = (app) => {
+    log.info('initializing...');
+    
     const transporter = app.config.smtpConnectionUrl?.length
         ? nodemailer.createTransport(app.config.smtpConnectionUrl)
         : null;

@@ -12,6 +12,8 @@ const requirePath = require('../locals/require_path');
 const log = require('../locals/logger')('httpService');
 
 module.exports = app => {
+    log.info('initializing...');
+
     const expressApp = express();
 
     expressApp.set('views', resolve(__dirname, '../views'));

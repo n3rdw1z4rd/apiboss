@@ -1,10 +1,12 @@
-var { readdirSync } = require('fs');
-var { resolve } = require('path');
+const { readdirSync } = require('fs');
+const { resolve } = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
 
 const log = require('../locals/logger')('storageService');
 
 module.exports = (app) => {
+    log.info('initializing...');
+
     const sequelize = app.config.dbConnectionUrl?.length
         ? new Sequelize(
             app.config.dbConnectionUrl,
@@ -31,7 +33,7 @@ module.exports = (app) => {
         readdirSync(resolve(__dirname, '../models'))
             .filter(file => (file.indexOf('.') !== 0))
             .forEach(file => {
-                const model = require(resolve(__dirname, '../models', file))(sequelize, DataTypes);
+                const model = require(resolve(__dirname, '../models', file));//(sequelize, DataTypes);
                 db[model.name] = model;
             });
 

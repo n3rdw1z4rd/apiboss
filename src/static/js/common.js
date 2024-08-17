@@ -1,25 +1,25 @@
-$(function(){
-	$('.modal').on('shown.bs.modal', function() {
-		$(this).find('[autofocus]').focus();
-	})
+$(function () {
+    $('.modal').on('shown.bs.modal', function () {
+        $(this).find('[autofocus]').focus();
+    })
 
-	$('table>tbody>tr').click(event => {
-		var dataSet = event.currentTarget.dataset
+    $('table>tbody>tr').click(event => {
+        var dataSet = event.currentTarget.dataset
 
-		if (dataSet.action) {
-			location.assign(`${dataSet.action}/${dataSet.id}`)
-		}
-	})
+        if (dataSet.action) {
+            location.assign(`${dataSet.action}/${dataSet.id}`)
+        }
+    })
 
-	$('.clickMethod').click(event => {
-		var dataSet = event.currentTarget.dataset
-		location.assign(`${dataSet.action}/${dataSet.apiid}/${dataSet.methodid}`)
-	})
+    $('.clickMethod').click(event => {
+        var dataSet = event.currentTarget.dataset
+        location.assign(`${dataSet.action}/${dataSet.apiid}/${dataSet.methodid}`)
+    })
 
-	$('.clickApiTable').click(event => {
-		var dataSet = event.currentTarget.dataset
-		location.assign(`${dataSet.action}/${dataSet.apiid}/${dataSet.apitableid}`)
-	})
+    $('.clickApiTable').click(event => {
+        var dataSet = event.currentTarget.dataset
+        location.assign(`${dataSet.action}/${dataSet.apiid}/${dataSet.apitableid}`)
+    })
 
-	$('[data-toggle='tooltip']').tooltip()
+    $('[data-toggle="tooltip"]').tooltip()
 })

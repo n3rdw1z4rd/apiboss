@@ -1,24 +1,24 @@
 body {
-	background: darkgrey;
-	/*padding-top: 85px; INFO: use this when using navbar-fixed-top*/
+    background: darkgrey;
+    /*padding-top: 85px; INFO: use this when using navbar-fixed-top*/
 }
 
 .navbar {
-	padding-top: 5px;
+    padding-top: 5px;
 }
 
 footer {
-	margin-top: 50px;
+    margin-top: 50px;
 }
 
 .table>tbody>tr:hover {
-	background-color: rgba(0,0,0,.1);
-	cursor: pointer;
-	cursor: hand;
+    background-color: rgba(0, 0, 0, .1);
+    cursor: pointer;
+    cursor: hand;
 }
 
 .clickMethod:hover {
-	background-color: rgba(0,0,0,.1);
-	cursor: pointer;
-	cursor: hand;
+    background-color: rgba(0, 0, 0, .1);
+    cursor: pointer;
+    cursor: hand;
 }

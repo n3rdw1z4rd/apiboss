@@ -1,49 +1,53 @@
-var fs = require('fs')
-var path = require('path')
+var { readdirSync } = require('fs');
+var { resolve } = require('path');
+const Sequelize = require('sequelize');
 
-const log = require('../locals/logger')('storageService')
-
-// const Sequelize = require('sequelize')
+const log = require('../locals/logger')('storageService');
 
 module.exports = app => {
-    // var sequelize = new Sequelize(
-    // 	app.config.dbConnectionUrl, {
-    // 		logging: function(msg) {
-    // 			//console.log(msg)
-    // 		},
-    // 		define: {
-    // 			charset: 'utf8'
-    // 		}
-    // 	}
-    // )
+    if (app.config.dbConnectionUrl?.length) {
+        const sequelize = new Sequelize(
+            app.config.dbConnectionUrl,
+            {
+                logging: function (msg) {
+                    //console.log(msg)
+                },
+                define: {
+                    charset: 'utf8'
+                }
+            }
+        );
 
-    // sequelize.authenticate().then(error => {
-    // 	if (error) throw error
-    // })
+        sequelize.authenticate().then(error => {
+            if (error) throw error;
+        });
 
-    // log.info('loading models...')
-    // var db = {}
-    // fs
-    // 	.readdirSync(path.join(__dirname, '..', 'models'))
-    // 	.filter(file => {
-    // 		return (file.indexOf('.') !== 0)
-    // 	})
-    // 	.forEach(file => {
-    // 		var model = sequelize.import(path.join(__dirname, '..', 'models', file))
-    // 		db[model.name] = model
-    // 	})
+        log.info('loading models...');
 
-    // Object.keys(db).forEach(modelName => {
-    // 	if ('associate' in db[modelName]) {
-    // 		db[modelName].associate(db)
-    // 	}
-    // })
+        const db = {};
 
-    // sequelize.sync({
-    // 	force: app.config.dbForceSync !== false
-    // })
+        readdirSync(resolve(__dirname, '../models'))
+            .filter(file => {
+                return (file.indexOf('.') !== 0)
+            })
+            .forEach(file => {
+                const model = require(resolve(__dirname, '../models', file))(sequelize, Sequelize.DataTypes);
+                db[model.name] = model;
+            })
 
-    // return sequelize
+        Object.keys(db).forEach(modelName => {
+            if ('associate' in db[modelName]) {
+                db[modelName].associate(db)
+            }
+        })
 
-    return {};
+        sequelize.sync({
+            force: app.config.dbForceSync !== false
+        })
+
+        return sequelize
+    } else {
+        log.warn('dbConnectionUrl not set in config');
+        return null;
+    }
 }

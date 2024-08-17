@@ -1,14 +1,14 @@
 $(function() {
 	$('#responseType').change(event => {
-		$('#runLiveTest').prop("disabled", true)
+		$('#runLiveTest').prop('disabled', true)
 	})
 
 	$('#response').change(event => {
-		$('#runLiveTest').prop("disabled", true)
+		$('#runLiveTest').prop('disabled', true)
 	})
 
 	$('#postData').change(event => {
-		$('#runLiveTest').prop("disabled", true)
+		$('#runLiveTest').prop('disabled', true)
 	})
 
 	$('#runLiveTest').click(event => {
@@ -21,7 +21,7 @@ $(function() {
 			console.log('responseType:', responseType)
 
 			var postData = $('#postData').val()
-			var data = responseType == 0 ? postData || "" : JSON.parse(postData || '{}')
+			var data = responseType == 0 ? postData || '' : JSON.parse(postData || '{}')
 
 			console.log('data:', data)
 

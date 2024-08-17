@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('methodModel')
+const log = require('./locals/logger')('methodModel')
 
 const constants = require('../locals/constants')
 
@@ -23,7 +23,7 @@ module.exports = (db, TYPE) => {
 		classMethods: {
 			associate: models => {
 				Method.belongsTo(models.Api, {
-					onDelete: "CASCADE",
+					onDelete: 'CASCADE',
 					foreignKey: {
 						allowNull: false
 					}

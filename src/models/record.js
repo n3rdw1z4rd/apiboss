@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('recordModel')
+const log = require('./locals/logger')('recordModel')
 
 module.exports = (db, TYPE) => {
 	var Record = db.define('Record', {
@@ -11,7 +11,7 @@ module.exports = (db, TYPE) => {
 		classMethods: {
 			associate: models => {
 				Record.belongsTo(models.ApiTable, {
-					onDelete: "CASCADE",
+					onDelete: 'CASCADE',
 					foreignKey: {
 						allowNull: false
 					}

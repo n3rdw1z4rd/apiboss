@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('tableModel')
+const log = require('./locals/logger')('tableModel')
 
 module.exports = (db, TYPE) => {
 	var ApiTable = db.define('ApiTable', {
@@ -9,14 +9,14 @@ module.exports = (db, TYPE) => {
 		fieldNames: {
 			type: TYPE.STRING,
 			allowNull: false,
-			defaultValue: ""
+			defaultValue: ''
 		}
 	}, {
 		tableName: 'api_tables',
 		classMethods: {
 			associate: models => {
 				ApiTable.belongsTo(models.Api, {
-					onDelete: "CASCADE",
+					onDelete: 'CASCADE',
 					foreignKey: {
 						allowNull: false
 					}

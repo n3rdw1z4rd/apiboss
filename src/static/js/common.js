@@ -21,5 +21,5 @@ $(function(){
 		location.assign(`${dataSet.action}/${dataSet.apiid}/${dataSet.apitableid}`)
 	})
 
-	$('[data-toggle="tooltip"]').tooltip()
+	$('[data-toggle='tooltip']').tooltip()
 })

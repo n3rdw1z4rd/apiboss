@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('apiModel')
+const log = require('./locals/logger')('apiModel')
 
 module.exports = (db, TYPE) => {
 	var Api = db.define('Api', {
@@ -11,7 +11,7 @@ module.exports = (db, TYPE) => {
 		classMethods: {
 			associate: models => {
 				Api.belongsTo(models.Account, {
-					onDelete: "CASCADE",
+					onDelete: 'CASCADE',
 					foreignKey: {
 						allowNull: false
 					}

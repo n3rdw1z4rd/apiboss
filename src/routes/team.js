@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('teamRoute')
+const log = require('../locals/logger')('teamRoute')
 var router = require('express').Router()
 
 const passport = require('passport')
@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer')
 const crypto = require('crypto')
 
 module.exports = app => {
-	var transporter = nodemailer.createTransport(app.config.smtpConnectionUrl)
+	// var transporter = nodemailer.createTransport(app.config.smtpConnectionUrl)
 
 	router.use(app.isAuthenticated)
 

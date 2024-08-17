@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('apisRoute')
+const log = require('../locals/logger')('apisRoute')
 var router = require('express').Router()
 
 module.exports = app => {

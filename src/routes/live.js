@@ -1,4 +1,4 @@
-var log = require('./locals/logger')('liveRoute')
+const log = require('../locals/logger')('liveRoute')
 var router = require('express').Router()
 var vm = require('vm')
 
@@ -10,7 +10,7 @@ module.exports = app => {
 		while (Date.now() - start < 120000) {}
 
 		res.setHeader('Content-Type', 'application/json')
-		res.send({ "timeoutTestSuccess": true })
+		res.send({ 'timeoutTestSuccess': true })
 	}),
 
 	router.post('/timeoutTest', (req, res) => {
@@ -19,7 +19,7 @@ module.exports = app => {
 		while (Date.now() - start < 120000) {}
 
 		res.setHeader('Content-Type', 'application/json')
-		res.send({ "timeoutTestSuccess": true })
+		res.send({ 'timeoutTestSuccess': true })
 	}),
 
 	router.get('/:route/:api/:method', (req, res) => {
@@ -57,7 +57,7 @@ module.exports = app => {
 												} catch (e) {
 													response = {
 														success: false,
-														message: "Malformed JSON"
+														message: 'Malformed JSON'
 													}
 												}
 												break
@@ -87,7 +87,7 @@ module.exports = app => {
 														db: db
 													}
 
-													log.debug("response:", response)
+													log.debug('response:', response)
 
 													try {
 														logic.runInNewContext(response)
@@ -122,26 +122,26 @@ module.exports = app => {
 										}))
 									}
 								} else {
-									log.error("method not found")
+									log.error('method not found')
 									res.send(JSON.stringify({
 										success: false,
-										error: "method not found"
+										error: 'method not found'
 									}))
 								}
 							})
 						} else {
-							log.error("api not found")
+							log.error('api not found')
 							res.send(JSON.stringify({
 								success: false,
-								error: "api not found"
+								error: 'api not found'
 							}))
 						}
 					})
 				} else {
-					log.error("account not found")
+					log.error('account not found')
 					res.send(JSON.stringify({
 						success: false,
-						error: "apiRoute not found"
+						error: 'apiRoute not found'
 					}))
 				}
 			})
@@ -188,7 +188,7 @@ module.exports = app => {
 												} catch (e) {
 													response = {
 														success: false,
-														message: "Malformed JSON"
+														message: 'Malformed JSON'
 													}
 												}
 												break
@@ -218,7 +218,7 @@ module.exports = app => {
 														db: db
 													}
 
-													log.debug("response:", response)
+													log.debug('response:', response)
 
 													try {
 														logic.runInNewContext(response)
@@ -253,26 +253,26 @@ module.exports = app => {
 										}))
 									}
 								} else {
-									log.error("method not found")
+									log.error('method not found')
 									res.send(JSON.stringify({
 										success: false,
-										error: "method not found"
+										error: 'method not found'
 									}))
 								}
 							})
 						} else {
-							log.error("api not found")
+							log.error('api not found')
 							res.send(JSON.stringify({
 								success: false,
-								error: "api not found"
+								error: 'api not found'
 							}))
 						}
 					})
 				} else {
-					log.error("account not found")
+					log.error('account not found')
 					res.send(JSON.stringify({
 						success: false,
-						error: "apiRoute not found"
+						error: 'apiRoute not found'
 					}))
 				}
 			})

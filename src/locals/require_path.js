@@ -1,27 +1,27 @@
-var log = require('./locals/logger')('requirePath')
+const { readdirSync } = require('fs');
+const { resolve } = require('path');
 
-const FS = require('fs')
-const PATH = require('path')
+const log = require('./logger')('requirePath');
 
-module.exports = requirePath => {
-	var contents = {}
+module.exports = (requirePath) => {
+    const contents = {};
 
-	FS.readdirSync(requirePath).forEach(fileName => {
-		var path = PATH.join('..', requirePath, fileName)
-		var name = ""
+    readdirSync(requirePath).forEach((fileName) => {
+        const path = resolve(requirePath, fileName);
+        const serviceName = fileName.split('.')[0].split(/[-_]/)
+            .map((word) =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join('');
 
-		fileName.split('.')[0].split(/[-_]/).forEach(word => {
-			name += word.charAt(0).toUpperCase() + word.slice(1)
-		})
+        try {
+            contents[serviceName] = require(path);
+            log.debug(`'${path}' loaded`);
+        } catch (e) {
+            log.error(`${e.code}: ${path}`);
+            log.error(e.message);
+            throw e;
+        }
+    })
 
-		try {
-			contents[name] = require(path)
-			log.debug(`"${path}" loaded`)
-		} catch(e) {
-			log.error(`"${path}" ${e.code}`)
-			log.error(e)
-		}
-	})
-
-	return contents
+    return contents;
 }

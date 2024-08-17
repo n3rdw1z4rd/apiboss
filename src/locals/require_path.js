@@ -1,4 +1,4 @@
-var log = require('hogger')('requirePath')
+var log = require('./locals/logger')('requirePath')
 
 const FS = require('fs')
 const PATH = require('path')

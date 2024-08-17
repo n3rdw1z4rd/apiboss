@@ -1,4 +1,4 @@
-var log = require('hogger')('tableModel')
+var log = require('./locals/logger')('tableModel')
 
 module.exports = (db, TYPE) => {
 	var ApiTable = db.define('ApiTable', {

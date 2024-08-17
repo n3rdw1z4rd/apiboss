@@ -1,4 +1,4 @@
-var log = require('hogger')('accountRoute')
+var log = require('./locals/logger')('accountRoute')
 var router = require('express').Router()
 
 const passport = require('passport')

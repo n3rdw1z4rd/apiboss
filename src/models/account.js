@@ -1,4 +1,4 @@
-var log = require('hogger')('accountModel')
+var log = require('./locals/logger')('accountModel')
 
 const passport = require('passport')
 const passportLocalSequelize = require('passport-local-sequelize')

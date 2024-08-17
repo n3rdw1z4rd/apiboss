@@ -1,4 +1,4 @@
-var log = require('hogger')('httpService')
+var log = require('./locals/logger')('httpService')
 
 const http = require('http')
 const express = require('express')

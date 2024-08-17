@@ -1,4 +1,4 @@
-var log = require('hogger')('recordModel')
+var log = require('./locals/logger')('recordModel')
 
 module.exports = (db, TYPE) => {
 	var Record = db.define('Record', {

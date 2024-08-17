@@ -1,4 +1,4 @@
-var log = require('hogger')('infoRoute')
+var log = require('./locals/logger')('infoRoute')
 var router = require('express').Router()
 
 module.exports = app => {

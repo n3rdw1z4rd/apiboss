@@ -1,4 +1,4 @@
-var log = require('hogger')('methodModel')
+var log = require('./locals/logger')('methodModel')
 
 const constants = require('../locals/constants')
 

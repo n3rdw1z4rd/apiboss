@@ -1,4 +1,4 @@
-var log = require('hogger')('apiModel')
+var log = require('./locals/logger')('apiModel')
 
 module.exports = (db, TYPE) => {
 	var Api = db.define('Api', {

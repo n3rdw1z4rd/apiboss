@@ -1,4 +1,4 @@
-var log = require('hogger')('liveRoute')
+var log = require('./locals/logger')('liveRoute')
 var router = require('express').Router()
 var vm = require('vm')
 

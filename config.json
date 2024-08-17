@@ -4,6 +4,7 @@
     "smtpConnectionUrl": "",
     "dbConnectionUrl": "sqlite://apiboss.db",
     "dbForceSync": false,
+    "dbShowLogs": false,
     "resetTokenExpireTime": 3600000,
     "fieldNameDelimiter": "|",
     "email": {

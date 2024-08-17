@@ -1,23 +1,25 @@
 var { readdirSync } = require('fs');
 var { resolve } = require('path');
-const Sequelize = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 
 const log = require('../locals/logger')('storageService');
 
-module.exports = app => {
-    if (app.config.dbConnectionUrl?.length) {
-        const sequelize = new Sequelize(
+module.exports = (app) => {
+    const sequelize = app.config.dbConnectionUrl?.length
+        ? new Sequelize(
             app.config.dbConnectionUrl,
             {
-                logging: function (msg) {
-                    //console.log(msg)
-                },
+                logging: app.config.dbShowLogs
+                    ? (msg) => log.debug(msg)
+                    : false,
                 define: {
                     charset: 'utf8'
                 }
             }
-        );
+        )
+        : null;
 
+    if (sequelize) {
         sequelize.authenticate().then(error => {
             if (error) throw error;
         });
@@ -27,27 +29,26 @@ module.exports = app => {
         const db = {};
 
         readdirSync(resolve(__dirname, '../models'))
-            .filter(file => {
-                return (file.indexOf('.') !== 0)
-            })
+            .filter(file => (file.indexOf('.') !== 0))
             .forEach(file => {
-                const model = require(resolve(__dirname, '../models', file))(sequelize, Sequelize.DataTypes);
+                const model = require(resolve(__dirname, '../models', file))(sequelize, DataTypes);
                 db[model.name] = model;
-            })
+            });
 
         Object.keys(db).forEach(modelName => {
             if ('associate' in db[modelName]) {
-                db[modelName].associate(db)
+                db[modelName].associate(db);
             }
-        })
+        });
 
         sequelize.sync({
-            force: app.config.dbForceSync !== false
-        })
-
-        return sequelize
+            force: (app.config.dbForceSync === true),
+        });
     } else {
         log.warn('dbConnectionUrl not set in config');
-        return null;
     }
+
+    // log.debug('sequelize:', sequelize);
+
+    return sequelize;
 }

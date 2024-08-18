@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'preact';
-import { createContext } from 'preact';
-import { useContext } from 'preact/hooks';
+import { FunctionComponent, createContext } from 'preact';
+import { useContext, useEffect, useState } from 'preact/hooks';
 import { Footer, Header, MainBody } from './sections';
-import { Data } from './types';
+import { Api, ApiData, Data } from './api';
+import { FirstRun } from './pages';
 import './app.css';
 
 export interface AppState {
@@ -16,10 +16,22 @@ const DEFAULT_APPSTATE: AppState = {
 export const AppContext = createContext(DEFAULT_APPSTATE);
 export const useAppContext = () => useContext(AppContext);
 
-export const App: FunctionComponent = () => (
-    <div className={'app is-clipped'}>
-        <Header />
-        <MainBody />
-        <Footer />
-    </div>
-);
+export const App: FunctionComponent = () => {
+    const [firstRun, setFirstRun] = useState<boolean>(false);
+
+    useEffect(() => {
+        Api.instance.getLocals()
+            .then((data: ApiData) => {
+                setFirstRun(data.payload?.IS_FIRST_RUN ?? false);
+            });
+    }, []);
+
+    return (
+        <div className={'app is-clipped'}>
+            <Header />
+            <MainBody />
+            <Footer />
+            {firstRun && <FirstRun />}
+        </div>
+    );
+}

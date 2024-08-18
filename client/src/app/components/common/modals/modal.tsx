@@ -1,6 +1,5 @@
 import { ComponentChild, FunctionComponent } from 'preact';
 import { CSSProperties, useState } from 'preact/compat';
-// import './modal.css';
 
 export interface ModalParams {
     active?: boolean,

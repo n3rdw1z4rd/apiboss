@@ -7,12 +7,13 @@ const requirePath = require('./locals/require_path');
 const log = require('./locals/logger')('main');
 
 const config = {
-    IS_FIRST_RUN: JSON.parse(process.env.IS_FIRST_RUN),
-
     http: {
         clientPath: resolve(__dirname, process.env.HTTP_CLIENT_PATH),
         host: process.env.HTTP_HOST,
-        locals: { appTitle: process.env.LOCALS_APP_TITLE, },
+        locals: {
+            IS_FIRST_RUN: JSON.parse(process.env.IS_FIRST_RUN),
+            appTitle: process.env.LOCALS_APP_TITLE,
+        },
         port: JSON.parse(process.env.HTTP_PORT),
         resetTokenExpireTime: JSON.parse(process.env.HTTP_RESET_TOKEN_EXPIRE_TIME),
         useSecurityMeasures: JSON.parse(process.env.HTTP_USE_SECURITY_MEASURES),

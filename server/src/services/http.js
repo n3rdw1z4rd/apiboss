@@ -9,6 +9,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 const requirePath = require('../locals/require_path');
+const { isNullOrEmpty } = require('../locals/string');
 const log = require('../locals/logger')('httpService');
 
 module.exports = (app) => {
@@ -51,33 +52,39 @@ module.exports = (app) => {
         next();
     });
 
-    expressApp.get('/', (req, res) => res.redirect('/info/welcome'));
+    if (!isNullOrEmpty(app.config.http.clientPath)) {
+        log.warn('USING clientPath:', app.config.http.clientPath);
 
-    expressApp.get('/ace/:path/:file', (req, res) => res.sendFile(join(
-        __dirname,
-        '../node_modules/ace-builds',
-        req.params.path,
-        req.params.file
-    )));
+        expressApp.use(express.static(app.config.http.clientPath));
+    } else {
+        expressApp.get('/', (req, res) => res.redirect('/info/welcome'));
 
-    log.info('loading routes...');
-    var routes = requirePath(resolve(__dirname, '../routes'));
+        expressApp.get('/ace/:path/:file', (req, res) => res.sendFile(join(
+            __dirname,
+            '../node_modules/ace-builds',
+            req.params.path,
+            req.params.file
+        )));
 
-    for (var route in routes) {
-        log.debug('route:', route.toLowerCase());
-        expressApp.use(`/${route.toLowerCase()}`, routes[route](app));
+        log.info('loading routes...');
+        const routes = requirePath(resolve(__dirname, '../routes'));
+
+        for (let route in routes) {
+            log.debug('route:', route.toLowerCase());
+            expressApp.use(`/${route.toLowerCase()}`, routes[route](app));
+        }
+
+        expressApp.use((req, res) => res.render(
+            'general',
+            {
+                body: 'error',
+                pageTitle: 'Error',
+                message: `404: The path for which you seek is not available (${req.path}).`,
+                linkHref: '/',
+                linkLabel: 'Home',
+            },
+        ));
     }
-
-    expressApp.use((req, res) => res.render(
-        'general',
-        {
-            body: 'error',
-            pageTitle: 'Error',
-            message: `404: The path for which you seek is not available (${req.path}).`,
-            linkHref: '/',
-            linkLabel: 'Home',
-        },
-    ));
 
     var httpServer = createServer(expressApp);
 

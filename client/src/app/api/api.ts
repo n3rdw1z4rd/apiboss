@@ -40,7 +40,7 @@ export class Api {
         return this._fetch(
             '/api',
             {
-                method: 'GET',
+                method: 'POST',
             },
         ).then((data: ApiData) => {
             if (!data.error) {

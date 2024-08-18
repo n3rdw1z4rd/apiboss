@@ -70,7 +70,7 @@ module.exports = app => {
     })
 
     var httpServer = createServer(expressApp)
-    httpServer.listen(app.config.httpPort)
+    httpServer.listen(app.config.httpPort, app.config.httpHost);
 
     httpServer.on('error', error => {
         log.error(error)
@@ -78,7 +78,7 @@ module.exports = app => {
 
     httpServer.on('listening', error => {
         if (error) log.error(error)
-        log.info('listening on port', app.config.httpPort)
+        log.info(`listening: http://${app.config.httpHost}:${app.config.httpPort}`);
     })
 
     return expressApp

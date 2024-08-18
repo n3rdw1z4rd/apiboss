@@ -8,7 +8,6 @@ const COLOR_YELLOW = '\x1b[33m';
 const COLOR_WHITE = '\x1b[37m';
 
 const SHOW_DEBUG = (process.env.NODE_ENV === 'development');
-console.debug('*** SHOW_DEBUG:', SHOW_DEBUG);
 
 class Logger {
     constructor(scope, level) {

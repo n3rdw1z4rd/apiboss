@@ -56,6 +56,7 @@ module.exports = (app) => {
         log.warn('USING clientPath:', app.config.http.clientPath);
 
         expressApp.use(express.static(app.config.http.clientPath));
+        // expressApp.use(`/api`, require('../routes/api')(app));
     } else {
         expressApp.get('/', (req, res) => res.redirect('/info/welcome'));
 

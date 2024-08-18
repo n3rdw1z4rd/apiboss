@@ -5,6 +5,13 @@ const { isNullOrEmpty } = require('../locals/string');
 
 const log = require('../locals/logger')('storageService');
 
+/**
+ * `app.services.Storage.models`: {
+ *      Account
+ * 
+ * }
+ */
+
 module.exports = (app) => {
     log.info('initializing...');
 
@@ -31,12 +38,5 @@ module.exports = (app) => {
 
     log.debug('connectionConfig:', config);
 
-    if (app.config.IS_FIRST_RUN) {
-        log.warn('!!! FIRST RUN !!!');
-    } else {
-
-    }
-
     return knex(config);
-    // return null;
 }

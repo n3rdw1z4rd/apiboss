@@ -11,7 +11,7 @@ const session = require('express-session');
 const requirePath = require('../locals/require_path');
 const log = require('../locals/logger')('httpService');
 
-module.exports = app => {
+module.exports = (app) => {
     log.info('initializing...');
 
     const expressApp = express();
@@ -19,67 +19,77 @@ module.exports = app => {
     expressApp.set('views', resolve(__dirname, '../views'));
     expressApp.set('view engine', 'ejs');
 
-    if (app.config.useSecurityMeasures) {
+    if (app.config.http.useSecurityMeasures) {
         expressApp.use(helmet());
     }
 
-    expressApp.use(bodyParser.json())
-    expressApp.use(bodyParser.urlencoded({ extended: true }))
+    expressApp.use(bodyParser.json());
+    expressApp.use(bodyParser.urlencoded({ extended: true }));
     expressApp.use(session({
         secret: 'the secret',
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
     }))
-    expressApp.use(passport.initialize())
-    expressApp.use(passport.session())
-    expressApp.use(flash())
-    expressApp.use(express.static(resolve(__dirname, '../static')))
+    expressApp.use(passport.initialize());
+    expressApp.use(passport.session());
+    expressApp.use(flash());
+    expressApp.use(express.static(resolve(__dirname, '../static')));
 
     expressApp.use((req, res, next) => {
-        log.debug(req.method, req.path)
+        log.debug(req.method, req.path);
 
-        res.locals = app.config.locals
-        res.locals.account = req.user
-        res.locals.constants = app.constants
-        res.locals.isAdmin = req.user ? (req.user.role >= app.constants.ACCOUNT_ROLE.ADMIN) : false
-        res.locals.error = req.flash('error')
-        res.locals.warning = req.flash('warning')
-        res.locals.success = req.flash('success')
-        res.locals.info = req.flash('info')
+        res.locals = app.config.http.locals;
 
-        next()
-    })
+        res.locals.account = req.user;
+        res.locals.constants = app.constants;
+        res.locals.isAdmin = req.user ? (req.user.role >= app.constants.ACCOUNT_ROLE.ADMIN) : false;
+        res.locals.error = req.flash('error');
+        res.locals.warning = req.flash('warning');
+        res.locals.success = req.flash('success');
+        res.locals.info = req.flash('info');
 
-    expressApp.get('/', (req, res) => {
-        res.redirect('/info/welcome')
-    })
+        next();
+    });
 
-    expressApp.get('/ace/:path/:file', (req, res) => {
-        res.sendFile(join(__dirname, '../node_modules/ace-builds', req.params.path, req.params.file))
-    })
+    expressApp.get('/', (req, res) => res.redirect('/info/welcome'));
 
-    log.info('loading routes...')
-    var routes = requirePath(resolve(__dirname, '../routes'))
+    expressApp.get('/ace/:path/:file', (req, res) => res.sendFile(join(
+        __dirname,
+        '../node_modules/ace-builds',
+        req.params.path,
+        req.params.file
+    )));
+
+    log.info('loading routes...');
+    var routes = requirePath(resolve(__dirname, '../routes'));
+
     for (var route in routes) {
-        log.debug('route:', route.toLowerCase())
-        expressApp.use(`/${route.toLowerCase()}`, routes[route](app))
+        log.debug('route:', route.toLowerCase());
+        expressApp.use(`/${route.toLowerCase()}`, routes[route](app));
     }
 
-    expressApp.use((req, res) => {
-        res.render('general', { body: 'error', pageTitle: 'Error', message: `404: The path for which you seek is not available (${req.path}).` })
-    })
+    expressApp.use((req, res) => res.render(
+        'general',
+        {
+            body: 'error',
+            pageTitle: 'Error',
+            message: `404: The path for which you seek is not available (${req.path}).`,
+            linkHref: '/',
+            linkLabel: 'Home',
+        },
+    ));
 
-    var httpServer = createServer(expressApp)
-    httpServer.listen(app.config.httpPort, app.config.httpHost);
+    var httpServer = createServer(expressApp);
 
-    httpServer.on('error', error => {
-        log.error(error)
-    })
+    httpServer.listen(app.config.http.port, app.config.http.host);
 
-    httpServer.on('listening', error => {
-        if (error) log.error(error)
-        log.info(`listening: http://${app.config.httpHost}:${app.config.httpPort}`);
-    })
+    httpServer.on('error', (error) => log.error(error));
 
-    return expressApp
-}
+    httpServer.on('listening', (error) => {
+        if (error) log.error(error);
+
+        log.info(`listening: http://${app.config.http.host}:${app.config.http.port}`);
+    });
+
+    return expressApp;
+};

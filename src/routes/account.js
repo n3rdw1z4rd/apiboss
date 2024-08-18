@@ -76,23 +76,23 @@ module.exports = (app) => {
 
     router.post('/register', (req, res) => {
         if (req.body.password === req.body.passwordConfirm) {
-            app.services.Storage.models.Account.register(req.body.email, req.body.password, (error, account) => {
-                if (error) {
-                    log.error(error)
-                    req.flash('error', error.message)
-                    res.redirect('register')
-                } else {
-                    req.login(account, error => {
-                        if (error) {
-                            req.flash('error', 'There was an internal error, please notify support.')
-                            res.redirect('login')
-                        } else {
-                            req.flash('success', `Registered a new account for ${req.body.email}`)
-                            res.redirect('manage')
-                        }
-                    })
-                }
-            })
+            // app.services.Storage.models.Account.register(req.body.email, req.body.password, (error, account) => {
+            //     if (error) {
+            //         log.error(error)
+            //         req.flash('error', error.message)
+            //         res.redirect('register')
+            //     } else {
+            //         req.login(account, error => {
+            //             if (error) {
+            //                 req.flash('error', 'There was an internal error, please notify support.')
+            //                 res.redirect('login')
+            //             } else {
+            //                 req.flash('success', `Registered a new account for ${req.body.email}`)
+            //                 res.redirect('manage')
+            //             }
+            //         })
+            //     }
+            // })
         } else {
             req.flash('error', 'Passwords must match')
             res.redirect('register')

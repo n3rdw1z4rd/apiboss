@@ -9,10 +9,15 @@ const log = require('./locals/logger')('main');
 const config = {
     IS_FIRST_RUN: JSON.parse(process.env.IS_FIRST_RUN),
 
-    httpHost: process.env.HTTP_HOST,
-    httpPort: JSON.parse(process.env.HTTP_PORT),
-    useSecurityMeasures: JSON.parse(process.env.USE_SECURITY_MEASURES),
-    smtpConnectionUrl: process.env.SMTP_CONNECTION_URL,
+    http: {
+        host: process.env.HTTP_HOST,
+        port: JSON.parse(process.env.HTTP_PORT),
+        useSecurityMeasures: JSON.parse(process.env.HTTP_USE_SECURITY_MEASURES),
+        resetTokenExpireTime: JSON.parse(process.env.HTTP_RESET_TOKEN_EXPIRE_TIME),
+        locals: {
+            appTitle: process.env.LOCALS_APP_TITLE,
+        },
+    },
 
     db: {
         client: process.env.DB_CLIENT,
@@ -23,16 +28,15 @@ const config = {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
         useNullAsDefault: JSON.parse(process.env.DB_USE_NULL_AS_DEFAULT),
+        showLogs: JSON.parse(process.env.DB_SHOW_LOGS),
+        fieldNameDelimiter: process.env.DB_FIELD_NAME_DELIMITER,
     },
 
-    resetTokenExpireTime: JSON.parse(process.env.RESET_TOKEN_EXPIRE_TIME),
-    fieldNameDelimiter: process.env.FIELD_NAME_DELIMITER,
     email: {
+        smtpConnectionUrl: process.env.EMAIL_SMTP_CONNECTION_URL,
         from: process.env.EMAIL_FROM,
     },
-    locals: {
-        appTitle: process.env.LOCALS_APP_TITLE,
-    },
+
     account_roles: JSON.parse(process.env.ACCOUNT_ROLES),
     account_statuses: JSON.parse(process.env.ACCOUNT_STATUSES),
 };
@@ -62,6 +66,10 @@ const app = {
 // log.debug('app:', app);
 
 try {
+    if (app.config.IS_FIRST_RUN) {
+        log.warn('!!! FIRST RUN !!!');
+    }
+
     log.info('loading services...');
     const services = requirePath(resolve(__dirname, 'services'));
 

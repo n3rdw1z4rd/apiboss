@@ -1,0 +1,9 @@
+@import 'bulma/css/bulma.css';
+
+.main {
+    height: 100%;
+}
+
+.footer {
+    --bulma-footer-padding: 1rem 1.5rem 1rem;
+}

@@ -21,7 +21,9 @@ const config = {
 
     db: {
         client: process.env.DB_CLIENT,
-        filename: process.env.DB_FILENAME,
+        filename: process.env.DB_FILENAME === ':memory:'
+            ? process.env.DB_FILENAME
+            : resolve(__dirname, '..', process.env.DB_FILENAME),
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         user: process.env.DB_USER,

@@ -31,7 +31,7 @@ export const App: FunctionComponent = () => {
             <Header />
             <MainBody />
             <Footer />
-            {firstRun && <FirstRun />}
+            {/* {firstRun && <FirstRun />} */}
         </div>
     );
 }

@@ -1,24 +1,17 @@
 import { ComponentChild, FunctionComponent } from 'preact';
-import { CSSProperties, useState } from 'preact/compat';
+import { useState } from 'preact/compat';
 
 export interface ModalParams {
     active?: boolean,
-    className?: string,
     closable?: boolean,
     contentClass?: string,
-    contentStyle?: CSSProperties,
-    style?: CSSProperties,
     title?: ComponentChild,
 }
 
 export const Modal: FunctionComponent<ModalParams> = ({
     active = true,
     children,
-    className,
     closable = false,
-    contentClass = '',
-    contentStyle = {},
-    style,
     // title,
 }) => {
     const [isActive, setIsActive] = useState(active);
@@ -30,17 +23,29 @@ export const Modal: FunctionComponent<ModalParams> = ({
 
     return (
         <div
-            className={`modal ${className ?? ''} ${isActive ? 'is-active' : ''}`}
-            style={style ?? {}}
+            className={`modal ${isActive ? 'is-active' : ''}`}
         >
             <div className={'modal-background'}></div>
 
-            <div
-                className={`modal-content ${contentClass ?? ''}`}
-                style={contentStyle ?? {}}
-            >
+            <div className={'modal-content'}>
                 {children}
             </div>
+
+            {/* <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Modal title</p>
+                    <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    {children}
+                </section>
+                <footer class="modal-card-foot">
+                    <div class="buttons">
+                        <button class="button is-success">Save changes</button>
+                        <button class="button">Cancel</button>
+                    </div>
+                </footer>
+            </div> */}
 
             {closable && (
                 <button

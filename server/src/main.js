@@ -1,17 +1,18 @@
 require('dotenv').config();
 
 const { resolve } = require('path');
+const { name, version } = require('../package.json');
 const constants = require('./locals/constants');
 const requirePath = require('./locals/require_path');
 
 const log = require('./locals/logger')('main');
+log.info(`${name} ${version} initializing...`);
 
 const config = {
     http: {
         clientPath: resolve(__dirname, process.env.HTTP_CLIENT_PATH),
         host: process.env.HTTP_HOST,
         locals: {
-            IS_FIRST_RUN: JSON.parse(process.env.IS_FIRST_RUN),
             appTitle: process.env.LOCALS_APP_TITLE,
         },
         port: JSON.parse(process.env.HTTP_PORT),
@@ -34,6 +35,12 @@ const config = {
     account_roles: JSON.parse(process.env.ACCOUNT_ROLES),
     account_statuses: JSON.parse(process.env.ACCOUNT_STATUSES),
 };
+
+const IS_FIRST_RUN = JSON.parse(process.env.IS_FIRST_RUN);
+
+if (IS_FIRST_RUN) {
+    config.IS_FIRST_RUN = true;
+}
 
 log.debug('config:', config);
 
@@ -60,19 +67,13 @@ const app = {
 // log.debug('app:', app);
 
 try {
-    if (app.config.IS_FIRST_RUN) {
-        log.warn('!!! FIRST RUN !!!');
-    }
-
-    log.info('loading services...');
+    log.info('initializing services...')
     const services = requirePath(resolve(__dirname, 'services'));
 
-    log.info('bootstrapping services...')
     for (var service in services) {
         services[service] = services[service](app);
     }
 
-    log.info('initializing services...')
     for (var service in services) {
         if (services[service].initialize) {
             services[service].initialize();
@@ -80,10 +81,12 @@ try {
     }
 
     app.services = services;
-
-    // log.debug('app:', app);
 } catch (error) {
     throw error;
+}
+
+if (IS_FIRST_RUN) {
+    log.warn('!!! IS_FIRST_RUN !!!');
 }
 
 log.info('ready');

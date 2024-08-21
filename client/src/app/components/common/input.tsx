@@ -6,8 +6,6 @@ export interface InputInterface extends InputHTMLAttributes<HTMLInputElement> {
     containerStyle?: CSSProperties,
     controlClassName?: string,
     controlStyle?: CSSProperties,
-    inputClassName?: string,
-    inputStyle?: CSSProperties,
     labelClassName?: string,
     labelStyle?: CSSProperties,
 }
@@ -21,7 +19,7 @@ export const Input: FunctionComponent<InputInterface> = (props) => (
             className={`label ${props.labelClassName ?? ''}`}
             style={props.labelStyle}
         >
-            {props.name}
+            {props.label ?? props.name}
         </label>
 
         <div
@@ -30,7 +28,7 @@ export const Input: FunctionComponent<InputInterface> = (props) => (
         >
             <input {...{
                 ...props,
-                className: `input ${props.inputClassName ?? ''}`,
+                className: `input ${props.className ?? ''}`,
             }} />
         </div>
     </div>

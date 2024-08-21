@@ -49,6 +49,10 @@ module.exports = (app) => {
         res.locals.success = req.flash('success');
         res.locals.info = req.flash('info');
 
+        if (app.config.IS_FIRST_RUN) {
+            res.locals.IS_FIRST_RUN = true;
+        }
+
         next();
     });
 

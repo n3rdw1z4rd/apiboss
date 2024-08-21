@@ -20,18 +20,10 @@ const config = {
     },
 
     db: {
-        client: process.env.DB_CLIENT,
-        filename: process.env.DB_FILENAME === ':memory:'
-            ? process.env.DB_FILENAME
-            : resolve(__dirname, '..', process.env.DB_FILENAME),
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
-        useNullAsDefault: JSON.parse(process.env.DB_USE_NULL_AS_DEFAULT),
-        showLogs: JSON.parse(process.env.DB_SHOW_LOGS),
+        connectionUrl: process.env.DB_CONNECTION_URL,
         fieldNameDelimiter: process.env.DB_FIELD_NAME_DELIMITER,
+        forceSync: JSON.parse(process.env.DB_FORCE_SYNC),
+        showLogs: JSON.parse(process.env.DB_SHOW_LOGS),
     },
 
     email: {

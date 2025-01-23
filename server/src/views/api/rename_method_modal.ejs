@@ -1,0 +1,19 @@
+<div class="modal fade" id="rename-method-modal" role="dialog" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title text-center">Rename Method</h3>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="/api/renameMethod">
+					<p><input name="apiId" type="hidden" value="<%= api.id %>"/></p>
+					<p><input name="methodId" type="hidden" value="<%= method.id %>"/></p>
+					<p><input class="form-control" name="name" type="text" placeholder="Name" value="<%= method.name %>" required autofocus/></p>
+					<p><button class="form-control btn btn-primary" type="submit">Submit</button></p>
+				</form>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,9 @@
+.form-wizard,
+.form-wizard-step,
+.form-wizard-controls {
+    padding: 4px;
+}
+
+.form-wizard-step {}
+
+.form-wizard-controls {}

@@ -1,0 +1,92 @@
+require('dotenv').config();
+
+const { resolve } = require('path');
+const { name, version } = require('../package.json');
+const constants = require('./locals/constants');
+const requirePath = require('./locals/require_path');
+
+const log = require('./locals/logger')('main');
+log.info(`${name} ${version} initializing...`);
+
+const config = {
+    http: {
+        clientPath: resolve(__dirname, process.env.HTTP_CLIENT_PATH),
+        host: process.env.HTTP_HOST,
+        locals: {
+            appTitle: process.env.LOCALS_APP_TITLE,
+        },
+        port: JSON.parse(process.env.HTTP_PORT),
+        resetTokenExpireTime: JSON.parse(process.env.HTTP_RESET_TOKEN_EXPIRE_TIME),
+        useSecurityMeasures: JSON.parse(process.env.HTTP_USE_SECURITY_MEASURES),
+    },
+
+    db: {
+        connectionUrl: process.env.DB_CONNECTION_URL,
+        fieldNameDelimiter: process.env.DB_FIELD_NAME_DELIMITER,
+        forceSync: JSON.parse(process.env.DB_FORCE_SYNC),
+        showLogs: JSON.parse(process.env.DB_SHOW_LOGS),
+    },
+
+    email: {
+        smtpConnectionUrl: process.env.EMAIL_SMTP_CONNECTION_URL,
+        from: process.env.EMAIL_FROM,
+    },
+
+    account_roles: JSON.parse(process.env.ACCOUNT_ROLES),
+    account_statuses: JSON.parse(process.env.ACCOUNT_STATUSES),
+};
+
+const IS_FIRST_RUN = JSON.parse(process.env.IS_FIRST_RUN);
+
+if (IS_FIRST_RUN) {
+    config.IS_FIRST_RUN = true;
+}
+
+log.debug('config:', config);
+
+const app = {
+    config,
+    constants,
+
+    isAuthenticated: (req, res, next) => {
+        if (req.isAuthenticated()) {
+            if (req.user.status !== app.constants.ACCOUNT_STATUS.ACTIVE) {
+                req.flash('error', `This account is currently ${app.constants.ACCOUNT_STATUS.getName(req.user.status)}.`);
+                req.logout();
+                res.redirect('/account/login');
+            } else {
+                next();
+            }
+        } else {
+            req.flash('error', 'You must be logged in to access that');
+            res.redirect('/account/login');
+        }
+    }
+};
+
+// log.debug('app:', app);
+
+try {
+    log.info('initializing services...')
+    const services = requirePath(resolve(__dirname, 'services'));
+
+    for (var service in services) {
+        services[service] = services[service](app);
+    }
+
+    for (var service in services) {
+        if (services[service].initialize) {
+            services[service].initialize();
+        }
+    }
+
+    app.services = services;
+} catch (error) {
+    throw error;
+}
+
+if (IS_FIRST_RUN) {
+    log.warn('!!! IS_FIRST_RUN !!!');
+}
+
+log.info('ready');

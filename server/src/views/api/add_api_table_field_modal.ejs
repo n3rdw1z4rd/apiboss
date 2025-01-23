@@ -1,0 +1,19 @@
+<div class="modal fade" id="add-api-table-field-modal" role="dialog" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title text-center">New Field Name</h3>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="/api/addApiTableField">
+					<p><input name="id" type="hidden" value="<%= apiTable.id %>"/></p>
+					<p><input name="ApiId" type="hidden" value="<%= apiTable.ApiId %>"/></p>
+					<p><input class="form-control" name="name" type="text" placeholder="Name" required autofocus/></p>
+					<p><button class="form-control btn btn-primary" type="submit">Submit</button></p>
+				</form>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+	</div>
+</div>

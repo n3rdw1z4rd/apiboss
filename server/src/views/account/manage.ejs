@@ -1,0 +1,27 @@
+<div class="container">
+	<div class="jumbotron">
+		<h2>Manage Account</h2><hr>
+		<form id="detailsForm" method="POST" action="/account/update">
+			<p>
+				<% if (account.role == constants.ACCOUNT_ROLE.DEVELOPER) { %>
+					<input class="form-control" name="apiRoute" type="text" placeholder="API Route" value="<%= account.apiRoute %>"/>
+				<% } else { %>
+					<h4>Your API Route: <strong><%= account.apiRoute %></strong></h4>
+				<% } %>
+			</p>
+			<p><input class="form-control" name="firstName" type="text" placeholder="First Name" value="<%= account.firstName %>"/></p>
+			<p><input class="form-control" name="lastName" type="text" placeholder="Last Name" value="<%= account.lastName %>"/></p>
+			<p><input class="form-control" name="primaryPhoneNumber" type="text" placeholder="Primary Phone Number" value="<%= account.primaryPhoneNumber %>"/></p>
+			<p><input class="form-control" name="secondaryPhoneNumber" type="text" placeholder="Secondary Phone Number" value="<%= account.secondaryPhoneNumber %>"/></p>
+			<p><input class="form-control" name="address1" type="text" placeholder="Address 1" value="<%= account.address1 %>"/></p>
+			<p><input class="form-control" name="address2" type="text" placeholder="Address 2" value="<%= account.address2 %>"/></p>
+			<p><input class="form-control" name="city" type="text" placeholder="City" value="<%= account.city %>"/></p>
+			<p><input class="form-control" name="state" type="text" placeholder="State" value="<%= account.state %>"/></p>
+			<p><input class="form-control" name="postalCode" type="text" placeholder="Postal Code" value="<%= account.postalCode %>"/></p>
+			<p><button class="form-control btn btn-primary" type="submit">Update</button></p>
+		</form>
+		<hr>
+		<a class="btn-xs btn-info" href="/account/resetPassword">Reset Password</a>
+		<a class="btn-xs btn-danger" href="/account/deleteAccount">Delete Account</a>
+	</div>
+</div>

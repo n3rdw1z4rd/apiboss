@@ -1,0 +1,13 @@
+<div class="container">
+	<div class="jumbotron">
+		<h2>Dashboard</h2><hr>
+		<p>
+			Active APIs:
+			<ul>
+				<% for(var i = 0; i < apis.length; i++) { %>
+					<li><%= apis[i].name %></li>
+				<% } %>
+			</ul>
+		</p>
+	</div>
+</div>
